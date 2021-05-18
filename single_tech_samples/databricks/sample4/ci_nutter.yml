@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Nutter'
 
 - script: |
-    nutter run /Shared/ $CLUSTER --recursive --junit_report
+    nutter run /Shared/Users/bwa@microsoft.com $CLUSTER --recursive --junit_report
   displayName: 'Execute Nutter'
   env:
       CLUSTER: '0516-144506-pug503'
