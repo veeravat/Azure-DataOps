@@ -1,0 +1,31 @@
+# Starter Nutter pipeline
+
+trigger:
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.5'
+
+- script: |
+    pip install nutter
+  displayName: 'Install Nutter'
+
+- script: |
+    nutter run /Shared/ $CLUSTER --recursive --junit_report
+  displayName: 'Execute Nutter'
+  env:
+      CLUSTER: '0516-144506-pug503'
+      DATABRICKS_HOST: 'https://adb-1503291521252601.1.azuredatabricks.net'
+      DATABRICKS_TOKEN: 'dapi3137572f3ba7dc95aa8c97338508c34a'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-*.xml'
+    testRunTitle: 'Publish Nutter results'
+  condition: succeededOrFailed()
