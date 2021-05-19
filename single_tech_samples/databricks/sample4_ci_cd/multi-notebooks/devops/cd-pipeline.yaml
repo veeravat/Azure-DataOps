@@ -3,7 +3,7 @@ pr: none
 resources:
   pipelines:
   - pipeline: ci
-    source: notebooks_ci_bo
+    source: multi-notebooks_ci_bo
 
 stages:
 - stage: deploy_to_test
