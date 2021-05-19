@@ -12,9 +12,9 @@ parameters:
   default: notebooks
 
 jobs:
-- deployment: deploy_notebooks
+- deployment: 'deploy_notebooks_${{ parameters.artifactName }}'
   environment: ${{ parameters.environmentName }}
-  displayName: ${{ parameters.artifactName }}
+  displayName: 'Deploy to Databricks for ${{ parameters.artifactName }}'
   pool:
     vmImage: 'ubuntu-latest'
   variables:
