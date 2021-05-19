@@ -24,10 +24,19 @@ stages:
       databricksDomain: '$(databricksDomain)'
       databricksToken: '$(databricksToken)'
       databricksNotebookPath: '$(databricksNotebookPath)'
-  - template: ../../devops/templates/jobs/integration-tests-job.yml
+      artifactName: 'notebooks'
+
+  - template: ../../devops/templates/jobs/deploy-notebooks-job.yml
     parameters:
       environmentName: 'TEST'
       databricksDomain: '$(databricksDomain)'
       databricksToken: '$(databricksToken)'
       databricksNotebookPath: '$(databricksNotebookPath)'
-      databricksClusterId: '$(databricksClusterId)'
+      artifactName: 'tests'
+  # - template: ../../devops/templates/jobs/integration-tests-job.yml
+  #   parameters:
+  #     environmentName: 'TEST'
+  #     databricksDomain: '$(databricksDomain)'
+  #     databricksToken: '$(databricksToken)'
+  #     databricksNotebookPath: '$(databricksNotebookPath)'
+  #     databricksClusterId: '$(databricksClusterId)'

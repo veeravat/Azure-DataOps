@@ -13,6 +13,12 @@ steps:
     ArtifactName: 'notebooks'
   displayName: 'Publish Databricks notebooks'
 
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(basePath)/multi-notebooks/tests'
+    ArtifactName: 'tests'
+  displayName: 'Publish Databricks notebooks'
+
 # - task: PublishPipelineArtifact@1
 #   inputs:
 #     targetPath: '$(basePath)/devops/scripts'

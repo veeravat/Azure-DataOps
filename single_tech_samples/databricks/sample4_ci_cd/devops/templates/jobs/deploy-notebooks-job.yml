@@ -7,6 +7,9 @@ parameters:
   type: string
 - name: databricksNotebookPath
   type: string
+- name: artifactName
+  type: string
+  default: notebooks
 
 jobs:
 - deployment: deploy_notebooks
@@ -38,6 +41,6 @@ jobs:
           env:
             DATABRICKS_HOST: ${{ parameters.databricksDomain }}
             DATABRICKS_TOKEN: ${{ parameters.databricksToken }}
-            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/notebooks
+            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/${{ artifactName }}
             DATABRICKS_NOTEBOOK_PATH: ${{ parameters.databricksNotebookPath }}
           displayName: 'Deploy notebooks'
