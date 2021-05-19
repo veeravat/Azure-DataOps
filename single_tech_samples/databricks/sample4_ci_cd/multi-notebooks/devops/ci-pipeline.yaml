@@ -29,16 +29,17 @@ steps:
   inputs:
     SourceFolder: '$(basePath)/multi-notebooks/notebooks'
     contents: '**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    targetFolder: $(Build.ArtifactStagingDirectory)/notebooks
 
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(basePath)/multi-notebooks/tests'
     contents: '**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    targetFolder: $(Build.ArtifactStagingDirectory)/tests
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: $(Build.ArtifactStagingDirectory)
     cleanTargetFolder: true # Optional
     artifactName: notebooks
+  displayName: 'Publish DevOps Scripts'
