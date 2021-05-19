@@ -1,16 +1,9 @@
-
-
 trigger: none
-
 pr: none
-
 resources:
   pipelines:
   - pipeline: ci
     source: notebooks_ci_bo
-    # trigger: 
-    #   branches:
-    #   - master
 
 stages:
 - stage: deploy_to_test
