@@ -18,10 +18,10 @@ stages:
       databricksToken: '$(databricksToken)'
       databricksNotebookPath: '$(databricksNotebookPath)'
       
-  # - template: ../../devops/templates/jobs/integration-tests-job.yml
-  #   parameters:
-  #     environmentName: 'TEST'
-  #     databricksDomain: '$(databricksDomain)'
-  #     databricksToken: '$(databricksToken)'
-  #     databricksNotebookPath: '$(databricksNotebookPath)'
-  #     databricksClusterId: '$(databricksClusterId)'
+  - template: ../../devops/templates/jobs/integration-tests-job.yml
+    parameters:
+      environmentName: 'TEST'
+      databricksDomain: '$(databricksDomain)'
+      databricksToken: '$(databricksToken)'
+      databricksNotebookPath: '$(databricksNotebookPath)'
+      databricksClusterId: '$(databricksClusterId)'
