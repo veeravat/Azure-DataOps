@@ -30,12 +30,14 @@ steps:
     SourceFolder: '$(basePath)/multi-notebooks/notebooks'
     contents: '**'
     targetFolder: $(Build.ArtifactStagingDirectory)/notebooks
+  displayName: 'Copy notebooks folder'
 
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(basePath)/multi-notebooks/tests'
     contents: '**'
     targetFolder: $(Build.ArtifactStagingDirectory)/tests
+    displayName: 'Copy tests folder'
 
 - task: PublishBuildArtifacts@1
   inputs:
