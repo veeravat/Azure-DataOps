@@ -7,24 +7,36 @@ variables:
   basePath: 'single_tech_samples/databricks/sample4_ci_cd'
 
 steps:
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(basePath)/multi-notebooks/notebooks'
-    ArtifactName: 'notebooks'
-    artifactType: filepath
-    fileSharePath: \script
-  displayName: 'Publish Databricks notebooks'
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(basePath)/multi-notebooks/notebooks'
+#     ArtifactName: 'notebooks'
+#   displayName: 'Publish Databricks notebooks'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(basePath)/multi-notebooks/tests'
-    ArtifactName: 'tests'
-    artifactType: filepath
-    fileSharePath: \script
-  displayName: 'Publish Databricks notebooks'
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(basePath)/multi-notebooks/tests'
+#     ArtifactName: 'tests'
+#   displayName: 'Publish Databricks notebooks'
 
 # - task: PublishPipelineArtifact@1
 #   inputs:
 #     targetPath: '$(basePath)/devops/scripts'
 #     ArtifactName: 'devops_scripts'
 #   displayName: 'Publish DevOps Scripts'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '$(basePath)/multi-notebooks/notebooks/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: CopyFiles@2
+  inputs:
+    contents: '$(basePath)/multi-notebooks/tests/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    cleanTargetFolder: true # Optional
+    artifactName: multi-notebooks

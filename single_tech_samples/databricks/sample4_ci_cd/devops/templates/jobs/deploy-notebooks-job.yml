@@ -7,14 +7,11 @@ parameters:
   type: string
 - name: databricksNotebookPath
   type: string
-- name: artifactName
-  type: string
-  default: notebooks
 
 jobs:
-- deployment: 'deploy_notebooks_${{ parameters.artifactName }}'
+- deployment: deploy_notebooks
   environment: ${{ parameters.environmentName }}
-  displayName: 'Deploy to Databricks for ${{ parameters.artifactName }}'
+  displayName: 'Deploy to Databricks'
   pool:
     vmImage: 'ubuntu-latest'
   variables:
@@ -41,6 +38,6 @@ jobs:
           env:
             DATABRICKS_HOST: ${{ parameters.databricksDomain }}
             DATABRICKS_TOKEN: ${{ parameters.databricksToken }}
-            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/${{ parameters.artifactName }}
-            DATABRICKS_NOTEBOOK_PATH: '/${{ parameters.artifactName }}${{ parameters.databricksNotebookPath }}'
+            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/notebooks
+            DATABRICKS_NOTEBOOK_PATH: ${{ parameters.databricksNotebookPath }}
           displayName: 'Deploy notebooks'

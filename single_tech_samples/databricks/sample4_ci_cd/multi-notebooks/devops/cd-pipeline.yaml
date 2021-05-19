@@ -7,7 +7,7 @@ pr: none
 resources:
   pipelines:
   - pipeline: ci
-    source: multi-notebooks_ci_bo
+    source: notebooks_ci_bo
     # trigger: 
     #   branches:
     #   - master
@@ -24,15 +24,7 @@ stages:
       databricksDomain: '$(databricksDomain)'
       databricksToken: '$(databricksToken)'
       databricksNotebookPath: '$(databricksNotebookPath)'
-      artifactName: 'notebooks'
-
-  - template: ../../devops/templates/jobs/deploy-notebooks-job.yml
-    parameters:
-      environmentName: 'TEST'
-      databricksDomain: '$(databricksDomain)'
-      databricksToken: '$(databricksToken)'
-      databricksNotebookPath: '$(databricksNotebookPath)'
-      artifactName: 'tests'
+      
   # - template: ../../devops/templates/jobs/integration-tests-job.yml
   #   parameters:
   #     environmentName: 'TEST'
