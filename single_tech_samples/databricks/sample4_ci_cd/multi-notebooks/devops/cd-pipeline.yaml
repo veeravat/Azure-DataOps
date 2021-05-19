@@ -29,35 +29,32 @@ stages:
       vmImage: 'ubuntu-latest'
     variables:
       pythonVersion: 3.8
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '$(pythonVersion)'
-              addToPath: true
-              architecture: 'x64'
-            displayName: 'Use Python Version: $(pythonVersion)'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+        architecture: 'x64'
+      displayName: 'Use Python Version: $(pythonVersion)'
 
-          - script: |
-              pip install nutter
-            displayName: 'Install Nutter'
+    - script: |
+        pip install nutter
+      displayName: 'Install Nutter'
 
-          - script: |
-              nutter run $(databricksNotebookPath) $CLUSTER --recursive --junit_report
-            displayName: 'Execute Nutter'
-            env:
-                CLUSTER: '$(databricksClusterId)'
-                DATABRICKS_HOST: '$(databricksDomain)'
-                DATABRICKS_TOKEN: '$(databricksToken)'
+    - script: |
+        nutter run $(databricksNotebookPath) $CLUSTER --recursive --junit_report
+      displayName: 'Execute Nutter'
+      env:
+          CLUSTER: '$(databricksClusterId)'
+          DATABRICKS_HOST: '$(databricksDomain)'
+          DATABRICKS_TOKEN: '$(databricksToken)'
 
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: '**/test-*.xml'
-              testRunTitle: 'Publish Nutter results'
-            condition: succeededOrFailed()
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/test-*.xml'
+        testRunTitle: 'Publish Nutter results'
+      condition: succeededOrFailed()
 
 
 
