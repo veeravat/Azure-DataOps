@@ -41,6 +41,6 @@ jobs:
           env:
             DATABRICKS_HOST: ${{ parameters.databricksDomain }}
             DATABRICKS_TOKEN: ${{ parameters.databricksToken }}
-            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/${{ artifactName }}
+            NOTEBOOKS_PATH: $(Pipeline.Workspace)/ci/${{ parameters.artifactName }}
             DATABRICKS_NOTEBOOK_PATH: ${{ parameters.databricksNotebookPath }}
           displayName: 'Deploy notebooks'
