@@ -23,14 +23,11 @@ stages:
       databricksNotebookPath: '$(databricksNotebookPath)'
 
   - job:
-  - deployment: run_integration_tests
-    environment: ${{ parameters.environmentName }}
     displayName: 'Run integration tests'
     dependsOn: deploy_notebooks
     pool:
       vmImage: 'ubuntu-latest'
     variables:
-      pythonWorkingDir: 'single_tech_samples/databricks/sample4_ci_cd/notebook-dataframe'
       pythonVersion: 3.8
     strategy:
       runOnce:
