@@ -3,7 +3,7 @@ from runtime.nutterfixture import NutterFixture
 class TestMainNotebook(NutterFixture):
     def run_test_main(self):
       print("test_name_runing")
-      dbutils.notebook.run('../../notebooks/main_notebook.py', 600)
+#       dbutils.notebook.run('../../notebooks/main_notebook.py', 600)
 
     def assertion_test_main(self):
       print("assert_test_name_runing")
