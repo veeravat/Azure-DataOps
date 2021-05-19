@@ -7,7 +7,7 @@ pr: none
 resources:
   pipelines:
   - pipeline: ci
-    source: mdw-dbx-nd-ci-pipeline
+    source: multi-notebooks_ci_bo
     # trigger: 
     #   branches:
     #   - master
