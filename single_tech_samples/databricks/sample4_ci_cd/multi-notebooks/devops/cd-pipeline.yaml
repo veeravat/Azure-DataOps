@@ -1,5 +1,9 @@
 trigger: none
 pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
 resources:
   pipelines:
   - pipeline: ci
@@ -17,11 +21,53 @@ stages:
       databricksDomain: '$(databricksDomain)'
       databricksToken: '$(databricksToken)'
       databricksNotebookPath: '$(databricksNotebookPath)'
-      
-  - template: ../../devops/templates/jobs/integration-tests-job.yml
-    parameters:
-      environmentName: 'TEST'
-      databricksDomain: '$(databricksDomain)'
-      databricksToken: '$(databricksToken)'
-      databricksNotebookPath: '$(databricksNotebookPath)'
-      databricksClusterId: '$(databricksClusterId)'
+
+  jobs:
+  - deployment: run_integration_tests
+    environment: ${{ parameters.environmentName }}
+    displayName: 'Run integration tests'
+    dependsOn: deploy_notebooks
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+      pythonWorkingDir: 'single_tech_samples/databricks/sample4_ci_cd/notebook-dataframe'
+      pythonVersion: 3.8
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+              addToPath: true
+              architecture: 'x64'
+            displayName: 'Use Python Version: $(pythonVersion)'
+
+          - script: |
+              pip install nutter
+            displayName: 'Install Nutter'
+
+          - script: |
+              nutter run $(databricksNotebookPath) $CLUSTER --recursive --junit_report
+            displayName: 'Execute Nutter'
+            env:
+                CLUSTER: '$(databricksClusterId)'
+                DATABRICKS_HOST: '$(databricksDomain)'
+                DATABRICKS_TOKEN: '$(databricksToken)'
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/test-*.xml'
+              testRunTitle: 'Publish Nutter results'
+            condition: succeededOrFailed()
+
+
+
+  # - template: ../../devops/templates/jobs/integration-tests-job.yml
+  #   parameters:
+  #     environmentName: 'TEST'
+  #     databricksDomain: '$(databricksDomain)'
+  #     databricksToken: '$(databricksToken)'
+  #     databricksNotebookPath: '$(databricksNotebookPath)'
+  #     databricksClusterId: '$(databricksClusterId)'
