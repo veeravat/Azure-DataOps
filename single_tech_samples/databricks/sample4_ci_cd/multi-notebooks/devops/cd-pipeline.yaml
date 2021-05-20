@@ -7,13 +7,13 @@ pool:
 resources:
   pipelines:
   - pipeline: ci
-    source: multi-notebooks_ci_bo
+    source: mdw-dbx-mn-ci-pipeline
 
 stages:
 - stage: deploy_to_test
   displayName: 'Deploy notebooks'
   variables:
-  - group: mdwdo-dbx-nd-test-bo
+  - group: mdwdo-dbx-mn-test
   jobs:
   - template: ../../devops/templates/jobs/deploy-notebooks-job.yml
     parameters:
